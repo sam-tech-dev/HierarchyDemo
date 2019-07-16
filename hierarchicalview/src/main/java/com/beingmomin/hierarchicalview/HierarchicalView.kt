@@ -1,33 +1,26 @@
 package com.beingmomin.hierarchicalview
 
+
 import android.app.Activity
 import android.content.Context
 import android.content.res.Resources
 import android.util.AttributeSet
 import android.util.Log
-import androidx.constraintlayout.widget.ConstraintLayout
-import kotlinx.android.synthetic.main.layout_hierarchy_divider.view.*
-import java.lang.reflect.ParameterizedType
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.FrameLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
-/*import com.google.gson.reflect.TypeToken*/
 import com.otaliastudios.zoom.ZoomLayout
-import kotlinx.android.synthetic.main.layout_hierarchy_main.view.*
-import java.lang.reflect.Type
-import kotlin.reflect.KVisibility
+import kotlinx.android.synthetic.main.layout_hierarchy_divider.view.*
 
 
-class HierarchicalView constructor( mContext: Context, attributeSet: AttributeSet) : FrameLayout(mContext, attributeSet) {
+class HierarchicalView constructor(mContext: Context, attributeSet: AttributeSet) : ZoomLayout(mContext, attributeSet) {
 
     var constraintLayout: ConstraintLayout
 
     init {
-        val mainView = LayoutInflater.from(mContext).inflate(R.layout.layout_hierarchy_main, this)
-        constraintLayout = mainView.cnstrt_hierarchy
+        constraintLayout = ConstraintLayout(mContext)
+        val layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
+        this.addView(constraintLayout, layoutParams)
     }
 
 
@@ -69,7 +62,7 @@ class HierarchicalView constructor( mContext: Context, attributeSet: AttributeSe
 
         var rootChildList: List<T>? = null
         if (root != null) {
-            val rootField = (root!! as Any).javaClass.getDeclaredField(hierarchyChildName)
+            val rootField = (root as Any).javaClass.getDeclaredField(hierarchyChildName)
             field.isAccessible = true
             rootChildList = field.get(root) as List<T>?
         }
@@ -121,7 +114,12 @@ class HierarchicalView constructor( mContext: Context, attributeSet: AttributeSe
                 constraintSet.connect(extraDetail.unId, ConstraintSet.LEFT, extraDetail.fatherId, ConstraintSet.LEFT)
             } else {
                 constraintSet.connect(extraDetail.unId, ConstraintSet.TOP, extraDetail.fatherId, ConstraintSet.BOTTOM)
-                constraintSet.connect(extraDetail.unId, ConstraintSet.LEFT, detailMap.get((rootChildList!!.get(index - 1)).hashCode())!!.unId, ConstraintSet.RIGHT)
+                constraintSet.connect(
+                    extraDetail.unId,
+                    ConstraintSet.LEFT,
+                    detailMap.get((rootChildList!!.get(index - 1)).hashCode())!!.unId,
+                    ConstraintSet.RIGHT
+                )
             }
         }
         constraintSet.applyTo(constraintLayout)
@@ -152,10 +150,10 @@ class HierarchicalView constructor( mContext: Context, attributeSet: AttributeSe
 
 
     inline fun <reified T> List<*>.asListOfType(): List<T>? =
-            if (all { it is T })
-                @Suppress("UNCHECKED_CAST")
-                this as List<T> else
-                null
+        if (all { it is T })
+            @Suppress("UNCHECKED_CAST")
+            this as List<T> else
+            null
 
 
     fun <T> calculateSpace(fatherId: Int, personalId: Int, root: T, hierarchyChildName: String) {
@@ -163,7 +161,7 @@ class HierarchicalView constructor( mContext: Context, attributeSet: AttributeSe
         val field = (root!! as Any).javaClass.getDeclaredField(hierarchyChildName)
         field.isAccessible = true
         val list = field.get(root) as List<T>?
-        var spaceVal = 0
+        val spaceVal :Int
         if (list != null && list.size > 0) {
             for (child in list) {
                 temp++
@@ -179,6 +177,5 @@ class HierarchicalView constructor( mContext: Context, attributeSet: AttributeSe
         }
         detailMap.put(root.hashCode(), ExtraDetail(personalId, fatherId, spaceVal))
     }
-
 
 }
