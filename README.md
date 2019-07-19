@@ -1,6 +1,6 @@
 # HierarchicalView
 
-HierachicalView is a library which allows to display views tree  of your application.
+HierachicalView is a library which allows to display views trees  in your application.
 
 ![alt text](https://github.com/sam-tech-dev/HierarchyDemo/blob/DROID-101/hierarchy.jpg)
 
