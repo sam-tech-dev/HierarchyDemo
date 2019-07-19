@@ -43,7 +43,6 @@ class HierarchicalView constructor(mContext: Context, attributeSet: AttributeSet
         }
     }
 
-
     fun dpToPx(dp: Float): Int {
         val density = Resources.getSystem().displayMetrics.density
         return Math.round(dp * density)
