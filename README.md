@@ -26,7 +26,7 @@ or Maven:
 
 To integrate this library in your app, you have to implement interface ```BinderView<T>``` on your activity or fragment like below. 
   
-**Note: T is HierarchyDataModel in which one parameter must be ```List<T>```.**  
+**Note: T is HierarchyDataModel in which one parameter must be ```List<T>``` which is the list of childs of the node.**  
 
 ```kotlin
 class MainActivity : AppCompatActivity(), BinderView<HierarchyDataModel> {
