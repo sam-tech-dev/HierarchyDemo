@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity(), BinderView<HierarchyDataModel> {
 }
 ```
 
-BinderView interface implements the three function as mentioned above.
+BinderView interface overrides the three function as mentioned above.
 
 First function **onCreateViewHolder** will return view of child which will be shown in heirarchy. In this funcion developer will inflate childView and bind data in it.
 
@@ -58,7 +58,7 @@ Second function **getHierarchyData** will return HierarchyDataObject in which wh
 
 Third function to **getLayoutMaximumWidth** will return the maximum width of childview in dp.
 
-## widget in XML
+## Widget in XML
 
 ```xml
  <com.beingmomin.hierarchicalview.HierarchicalView
@@ -77,9 +77,12 @@ Third function to **getLayoutMaximumWidth** will return the maximum width of chi
             app:zoomEnabled="true"
             />
 ```
+### Special Thanks
+
+[ZoomLayout](https://github.com/natario1/ZoomLayout)
 
 
-## License
+### License
 ```
 Copyright 2019 BeingMomin Inc.
 
