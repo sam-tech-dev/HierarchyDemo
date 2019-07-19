@@ -24,7 +24,9 @@ or Maven:
 
 ## In Code
 
-To integrate this library in your app, you have to implement interface "BinderView" on your activity or fragment like below 
+To integrate this library in your app, you have to implement interface ```BinderView<T>``` on your activity or fragment like below. 
+  
+**Note: T is HierarchyDataModel in which one parameter must be ```List<T>```.**  
 
 ```kotlin
 class MainActivity : AppCompatActivity(), BinderView<HierarchyDataModel> {
@@ -38,87 +40,59 @@ class MainActivity : AppCompatActivity(), BinderView<HierarchyDataModel> {
     override fun getHierarchyData(): HierarchyDataModel {
         return hierarchyDataObject
     }
-
+     
+     // maximum width of the layout will be in dp format 
     override fun getLayoutMaximumWidth(): Float {
+        // It means the maximum width of childview will be 60dp
         return 60f
     }
     
 }
 ```
 
-```
-Give examples
-```
+BinderView interface implements the three function as mentioned above.
 
-### Installing
+First function **onCreateViewHolder** will return view of child which will be shown in heirarchy. In this funcion developer will inflate childView and bind data in it.
 
-A step by step series of examples that tell you how to get a development env running
+Second function **getHierarchyData** will return HierarchyDataObject in which whole hierarchy is stored. 
 
-Say what the step will be
+Third function to **getLayoutMaximumWidth** will return the maximum width of childview in dp.
 
-```
-Give the example
-```
+## widget in XML
 
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
+```xml
+ <com.beingmomin.hierarchicalview.HierarchicalView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:hasClickableChildren="true"
+            app:horizontalPanEnabled="true"
+            app:maxZoom="3.0"
+            app:maxZoomType="zoom"
+            app:minZoom="0.7"
+            app:minZoomType="zoom"
+            app:overPinchable="true"
+            app:overScrollHorizontal="true"
+            app:overScrollVertical="true"
+            app:verticalPanEnabled="true"
+            app:zoomEnabled="true"
+            />
 ```
 
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
-## Authors
-
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
 ## License
+```
+Copyright 2019 BeingMomin Inc.
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-## Acknowledgments
+   http://www.apache.org/licenses/LICENSE-2.0
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
 
