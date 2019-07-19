@@ -23,7 +23,6 @@ class HierarchicalView constructor(mContext: Context, attributeSet: AttributeSet
         this.addView(constraintLayout, layoutParams)
     }
 
-
     val detailMap = mutableMapOf<Int, ExtraDetail>()
 
     var maxWidthOfSideLine: Float = 0f
